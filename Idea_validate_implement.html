@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDEA VALIDATE IMPLEMENT (IVP) STARTUP OS - The All-in-One Operating System for Startups</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Chart.js for data visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom, #f0f9ff, #e1f5fe);
+            color: #1e3a8a;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .timeline {
+            border-left: 3px solid #0ea5e9;
+            border-bottom-right-radius: 4px;
+            border-top-right-radius: 4px;
+            margin: 0 auto;
+            position: relative;
+            padding: 0 0 0 30px;
+        }
+        
+        .timeline-item {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .timeline-item:before {
+            content: "";
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #0ea5e9;
+            left: -39px;
+            top: 5px;
+        }
+        
+        .role-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        
+        .role-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .process-step {
+            transition: all 0.4s ease;
+            border-left: 4px solid;
+        }
+        
+        .process-step:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-dot {
+            transition: all 0.3s ease;
+        }
+        
+        .nav-dot:hover {
+            transform: scale(1.2);
+        }
+        
+        .floating-shape {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0px); }
+            50% { transform: translate(0, -15px); }
+            100% { transform: translate(0, 0px); }
+        }
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: linear-gradient(90deg, #1e3a8a 0%, #0ea5e9 100%);
+            width: 0%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            transition: width 0.2s ease;
+        }
+
+        .email-section {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e1f5fe 100%);
+            border: 2px solid #0ea5e9;
+        }
+        
+        .highlight-text {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        
+        .slide-heading {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #1e3a8a 0%, #0ea5e9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+    <!-- Progress bar -->
+    <div class="progress-bar" id="progress-bar"></div>
+
+    <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- Navigation Dots -->
+        <div class="fixed right-6 top-1/2 transform -translate-y-1/2 z-50 hidden md:flex flex-col gap-4">
+            <a href="#header" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#email-content" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#executive" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#problem" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#solution" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#process" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#journey" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#market" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#business-model" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#funding-ask" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#projections" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#roles" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#impact" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#partnership" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#team" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+            <a href="#contact" class="nav-dot w-4 h-4 rounded-full bg-blue-600 opacity-50 hover:opacity-100"></a>
+        </div>
+
+        <!-- Header Section -->
+        <header id="header" class="gradient-bg text-white rounded-3xl shadow-2xl p-8 mb-12 text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-full h-full opacity-10">
+                <div class="floating-shape absolute top-10 left-10 w-20 h-20 rounded-full bg-white"></div>
+                <div class="floating-shape absolute bottom-10 right-10 w-24 h-24 rounded-full bg-white" style="animation-delay: 2s;"></div>
+                <div class="floating-shape absolute top-1/2 left-1/4 w-16 h-16 rounded-full bg-white" style="animation-delay: 4s;"></div>
+            </div>
+            
+            <div class="flex justify-center mb-6">
+                <div class="w-24 h-24 rounded-full bg-white flex items-center justify-center shadow-lg">
+                    <i class="fas fa-lightbulb text-4xl text-blue-600"></i>
+                </div>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-extrabold mb-2">IDEA VALIDATE IMPLEMENT (IVP) STARTUP OS</h1>
+            <h3 class="text-xl md:text-2xl font-semibold text-blue-100 mb-4">The All-in-One Operating System for Startups</h3>
+            <p class="text-lg font-medium text-blue-100 max-w-3xl mx-auto">
+                A Comprehensive Digital Ecosystem to Empower 10,000+ Startups, Create 1,00,000+ Jobs, and Drive ₹500+ Crores in Investment
+            </p>
+            <div class="mt-6 flex flex-wrap justify-center gap-4">
+                <span class="px-4 py-2 bg-white text-blue-700 rounded-full text-sm font-semibold">Youth Empowerment</span>
+                <span class="px-4 py-2 bg-white text-blue-700 rounded-full text-sm font-semibold">Innovation</span>
+                <span class="px-4 py-2 bg-white text-blue-700 rounded-full text-sm font-semibold">Job Creation</span>
+                <span class="px-4 py-2 bg-white text-blue-700 rounded-full text-sm font-semibold">Digital AP</span>
+            </div>
+            
+            <div class="mt-8">
+                <a href="#contact" class="inline-block px-6 py-3 bg-white text-blue-700 rounded-full font-semibold shadow-md hover:shadow-lg transition-all">
+                    <i class="fas fa-arrow-down mr-2"></i>Connect With Us
+                </a>
+            </div>
+        </header>
+
+        <!-- Email Content Section -->
+        <section id="email-content" class="email-section rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Seeking Your Guidance & Support</h2>
+            
+            <div class="bg-white rounded-2xl p-6 mb-6">
+                <p class="text-lg text-gray-700 mb-4">
+                    <span class="highlight-text">Respected Sir/Madam,</span>
+                </p>
+                <p class="text-lg text-gray-700 mb-4">
+                    Namaskaram 🙏
+                </p>
+                <p class="text-lg text-gray-700 mb-4">
+                    I am <span class="highlight-text">Kakarla Rajesh</span>, a proud son of <span class="highlight-text">Ojili Village, Ojili Mandal, Tirupati District, Andhra Pradesh</span>.
+                    I pursued my <span class="highlight-text">B.Tech in Mechanical Engineering</span> and am currently working as a <span class="highlight-text">Research Engineer</span> at <span class="highlight-text">Hyundai Motor India Engineering Pvt. Ltd.</span>, with a <span class="highlight-text">specialization in Interior Design</span> — specifically <span class="highlight-text">Crash Pads and Console Parts</span> — and hold <span class="highlight-text">2 years of industry experience</span>.
+                </p>
+                <p class="text-lg text-gray-700 mb-4">
+                    Although I come from a <span class="highlight-text">humble background</span>, I have always <span class="highlight-text">dreamed big</span>. Witnessing the challenges faced by <span class="highlight-text">students, innovators, and aspiring entrepreneurs</span> in our state, I was inspired to create <span class="highlight-text">IVP STARTUP OS</span> — a <span class="highlight-text">unified digital ecosystem</span> that will <span class="highlight-text">empower startups, students, MSMEs, innovators, and investors</span> across Andhra Pradesh in phase-1 and future plan is to launch all over the world.
+                </p>
+                <p class="text-lg text-gray-700 mb-4">
+                    Being <span class="highlight-text">new to the startup ecosystem</span>, I am deeply committed to <span class="highlight-text">learning, growing, and executing this vision</span>.
+                    With your <span class="highlight-text">mentorship, guidance, and support</span>, I am confident we can <span class="highlight-text">transform this vision into a powerful reality</span>.
+                </p>
+            </div>
+            
+            <div class="bg-blue-50 rounded-2xl p-6">
+                <h3 class="text-2xl font-bold text-blue-800 mb-4 text-center">Our Vision & Mission</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span class="text-gray-700">Empower <span class="font-bold">10,000+ startups</span> across Andhra Pradesh in the next <span class="font-bold">3 years and 1,00,000+ in across the india </span></span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span class="text-gray-700">Facilitate <span class="font-bold">₹5000+ crores</span> in funding through investors, government schemes, and collaborations</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span class="text-gray-700">Create <span class="font-bold">1,00,000+ job opportunities</span> for youth and professionals</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span class="text-gray-700">Establish digital integration between incubation hubs, innovation centers, and AP government initiatives</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-green-500 mt-1 mr-3"></i>
+                                <span class="text-gray-700">Build a strong bridge connecting students, startups, mentors, MSMEs, and funding bodies</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-blue-50 rounded-2xl p-6 mt-6">
+                <h3 class="text-2xl font-bold text-blue-800 mb-4 text-center">Why I'm Reaching Out</h3>
+                <div class="mt-6 text-center">
+                    <p class="text-lg text-gray-700 mb-4">
+                        <span class="highlight-text">Sir/Madam</span>, your <span class="highlight-text">visionary leadership</span> has inspired thousands of youth to <span class="highlight-text">dream big and achieve greater heights</span>.
+                        With your <span class="highlight-text">funding support, strategic guidance, and blessings</span>, <span class="highlight-text">IVP Startup OS</span> can become a <span class="highlight-text">flagship initiative</span> that <span class="highlight-text">positions Andhra Pradesh as the Startup Capital of India</span> and creates <span class="highlight-text">transformational opportunities for lakhs of young innovators</span>.
+                    </p>
+                    <p class="text-lg text-gray-700 mb-4">
+                        I humbly request an <span class="highlight-text">opportunity to present my proposal in person</span> and discuss how we can <span class="highlight-text">align Startup OS with government programs and policies</span> to drive this <span class="highlight-text">revolutionary change</span>.
+                    </p>
+                    <p class="text-lg text-gray-700">
+                        Your <span class="highlight-text">guidance and support</span> will be the driving force behind this vision.
+                    </p>
+                    <p class="text-xl font-bold text-blue-700 mt-6">
+                        Together, we can shape the future of Andhra Pradesh as well in India
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Executive Summary -->
+        <section id="executive" class="bg-white rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Executive Summary</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <p class="text-lg text-gray-700 mb-6">
+                        IVP STARTUP OS is a comprehensive digital platform designed to accelerate Andhra Pradesh's journey to becoming India's startup capital. Our ecosystem connects entrepreneurs, investors, mentors, government agencies, and service providers in a unified digital environment.
+                    </p>
+                    <div class="bg-blue-50 rounded-2xl p-6">
+                        <h3 class="text-xl font-bold text-blue-800 mb-3">Alignment with AP Vision</h3>
+                        <p class="text-gray-700">
+                            Our initiative directly supports the vision of a digital Andhra Pradesh and complements government efforts like the AP Innovation Society, YSR Cheyutha, and EBC Nestam by creating a structured pathway from idea to successful enterprise.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-blue-100 rounded-2xl p-4 text-center">
+                            <div class="stat-number">10,000+</div>
+                            <p class="text-sm font-semibold text-gray-700">Startups Empowered</p>
+                        </div>
+                        <div class="bg-green-100 rounded-2xl p-4 text-center">
+                            <div class="stat-number">1L+</div>
+                            <p class="text-sm font-semibold text-gray-700">Jobs Created</p>
+                        </div>
+                        <div class="bg-purple-100 rounded-2xl p-4 text-center">
+                            <div class="stat-number">₹500Cr+</div>
+                            <p class="text-sm font-semibold text-gray-700">Funding Facilitated</p>
+                        </div>
+                        <div class="bg-orange-100 rounded-2xl p-4 text-center">
+                            <div class="stat-number">26</div>
+                            <p class="text-sm font-semibold text-gray-700">Districts Covered</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Problem Statement -->
+        <section id="problem" class="bg-white rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">The Challenge: Startup Ecosystem Gaps</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-red-50 rounded-2xl p-6 card-hover">
+                    <div class="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-unlink text-2xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Fragmented Ecosystem</h3>
+                    <p class="text-gray-700">Startups, investors, mentors, and government schemes operate in silos with limited coordination.</p>
+                </div>
+                <div class="bg-yellow-50 rounded-2xl p-6 card-hover">
+                    <div class="w-14 h-14 rounded-full bg-yellow-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-money-bill-wave text-2xl text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Funding Gaps</h3>
+                    <p class="text-gray-700">Promising startups struggle to access early-stage funding and investor networks.</p>
+                </div>
+                <div class="bg-blue-50 rounded-2xl p-6 card-hover">
+                    <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-graduation-cap text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Mentorship Deficit</h3>
+                    <p class="text-gray-700">Lack of structured guidance from experienced entrepreneurs and industry experts.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Solution -->
+        <section id="solution" class="bg-white rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Our Solution: Startup OS Ecosystem</h2>
+            <div class="flex justify-center mb-10">
+                <div class="relative">
+                    <div class="w-64 h-64 rounded-full bg-blue-50 flex items-center justify-center">
+                        <i class="fas fa-cogs text-5xl text-blue-600"></i>
+                    </div>
+                    <div class="absolute -top-2 -left-2 w-72 h-72 rounded-full border-4 border-blue-200 opacity-50"></div>
+                    <div class="absolute -top-6 -left-6 w-80 h-80 rounded-full border-4 border-blue-100 opacity-30"></div>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">Core Platform Features</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-lg"></i>
+                            <span class="text-gray-700"><strong>Unified Dashboard:</strong> Single access point for all startup resources</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-lg"></i>
+                            <span class="text-gray-700"><strong>Digital Marketplace:</strong> Connect startups with service providers</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-lg"></i>
+                            <span class="text-gray-700"><strong>Funding Gateway:</strong> Curated investor connections and funding opportunities</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-lg"></i>
+                            <span class="text-gray-700"><strong>Mentorship Network:</strong> Access to 500+ seasoned entrepreneurs and experts</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-3 text-lg"></i>
+                            <span class="text-gray-700"><strong>Government Scheme Integration:</strong> Simplified access to all relevant programs</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">Key Differentiators</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-500 mt-1 mr-3 text-lg"></i>
+                            <span class="text-gray-700"><strong>Andhra-First Approach:</strong> Tailored specifically for AP's demographic and economic landscape</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-500 mt-1 mr-3 text-lg"></i>
+                            <span class="text-gray-700"><strong>Comprehensive Ecosystem:</strong> 138+ roles covering all aspects of startup journey</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-500 mt-1 mr-3 text-lg"></i>
+                            <span class="text-gray-700"><strong>District-Level Implementation:</strong> Grassroots reach across all 26 districts</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-star text-yellow-500 mt-1 mr-3 text-lg"></i>
+                            <span class="text-gray-700"><strong>Public-Private Partnership:</strong> Designed for seamless government collaboration</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section id="process" class="bg-white rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-2">How IVP START OS Works & Supports Entrepreneurs</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">
+                A comprehensive 360° support system that guides entrepreneurs from idea to scale
+            </p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                <!-- Training & Mentorship -->
+                <div class="process-step bg-blue-50 rounded-2xl p-6 border-l-blue-500">
+                    <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-chalkboard-teacher text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Training & Mentorship</h3>
+                    <p class="text-gray-700 mb-2">1–1.5 months of intensive 1-on-1 training covering:</p>
+                    <ul class="text-gray-600 text-sm list-disc pl-5">
+                        <li>Startup fundamentals</li>
+                        <li>Pitching techniques</li>
+                        <li>Financial planning</li>
+                        <li>Market analysis</li>
+                        <li>Product building</li>
+                    </ul>
+                </div>
+                
+                <!-- Idea Generation & Validation -->
+                <div class="process-step bg-green-50 rounded-2xl p-6 border-l-green-500">
+                    <div class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-lightbulb text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Idea Generation & Validation</h3>
+                    <p class="text-gray-700 mb-2">Structured support for:</p>
+                    <ul class="text-gray-600 text-sm list-disc pl-5">
+                        <li>Innovative idea generation</li>
+                        <li>Market research validation</li>
+                        <li>Product-market fit analysis</li>
+                        <li>Competitive landscape mapping</li>
+                    </ul>
+                </div>
+                
+                <!-- Branding & Company Registration -->
+                <div class="process-step bg-purple-50 rounded-2xl p-6 border-l-purple-500">
+                    <div class="w-14 h-14 rounded-full bg-purple-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-trademark text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Branding & Registration</h3>
+                    <p class="text-gray-700 mb-2">Complete identity and legal setup:</p>
+                    <ul class="text-gray-600 text-sm list-disc pl-5">
+                        <li>Company naming & logo design</li>
+                        <li>Business registration</li>
+                        <li>Fast-tracked government approvals</li>
+                        <li>IP protection guidance</li>
+                    </ul>
+                </div>
+                
+                <!-- Funding & Government Schemes -->
+                <div class="process-step bg-yellow-50 rounded-2xl p-6 border-l-yellow-500">
+                    <div class="w-14 h-14 rounded-full bg-yellow-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-hand-holding-usd text-2xl text-yellow-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Funding & Schemes</h3>
+                    <p class="text-gray-700 mb-2">Comprehensive financial support:</p>
+                    <ul class="text-gray-600 text-sm list-disc pl-5">
+                        <li>Investor connections</li>
+                        <li>Government scheme applications</li>
+                        <li>Subsidy facilitation</li>
+                        <li>Policy benefit optimization</li>
+                    </ul>
+                </div>
+                
+                <!-- Product Development & Launch -->
+                <div class="process-step bg-red-50 rounded-2xl p-6 border-l-red-500">
+                    <div class="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-rocket text-2xl text-red-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Product Development & Launch</h3>
+                    <p class="text-gray-700 mb-2">End-to-end product support:</p>
+                    <ul class="text-gray-600 text-sm list-disc pl-5">
+                        <li>Product development guidance</li>
+                        <li>Testing protocols</li>
+                        <li>Launch strategy</li>
+                        <li>Iterative improvement framework</li>
+                    </ul>
+                </div>
+                
+                <!-- Market Growth & Scaling -->
+                <div class="process-step bg-teal-50 rounded-2xl p-6 border-l-teal-500">
+                    <div class="w-14 h-14 rounded-full bg-teal-100 flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-line text-2xl text-teal-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">Market Growth & Scaling</h3>
+                    <p class="text-gray-700 mb-2">Sustainable expansion support:</p>
+                    <ul class="text-gray-600 text-sm list-disc pl-5">
+                        <li>Marketing strategy development</li>
+                        <li>User acquisition techniques</li>
+                        <li>Business scaling methodologies</li>
+                        <li>Next-stage growth preparation</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-6 text-center text-white">
+                <h3 class="text-2xl font-bold mb-4">End-to-End Entrepreneur Support</h3>
+                <p class="mb-4 max-w-3xl mx-auto">IVP STARTUP OS ensures that every entrepreneur in Andhra Pradesh, from rural innovators to urban founders, receives structured guidance and tools to succeed at every stage of their journey.</p>
+                <div class="flex flex-wrap justify-center gap-4 mt-4">
+                    <div class="bg-white bg-opacity-20 rounded-xl px-4 py-2">
+                        <i class="fas fa-users mr-2"></i> Rural & Urban Inclusion
+                    </div>
+                    <div class="bg-white bg-opacity-20 rounded-xl px-4 py-2">
+                        <i class="fas fa-road mr-2"></i> Complete Journey Support
+                    </div>
+                    <div class="bg-white bg-opacity-20 rounded-xl px-4 py-2">
+                        <i class="fas fa-tools mr-2"></i> Structured Methodology
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Visual Process Flow -->
+        <section id="journey" class="bg-white rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">The Entrepreneur's Journey with IVP STARTUP OS</h2>
+            
+            <div class="relative">
+                <!-- Process Line -->
+                <div class="absolute left-0 right-0 top-10 h-1 bg-blue-200 mx-10 hidden md:block"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-6 gap-6 relative">
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center mb-4 z-10">
+                            <i class="fas fa-chalkboard-teacher text-2xl text-blue-600"></i>
+                        </div>
+                        <h3 class="font-bold text-blue-600">Training</h3>
+                        <p class="text-sm text-gray-600 mt-1">1-1.5 months</p>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mb-4 z-10">
+                            <i class="fas fa-lightbulb text-2xl text-green-600"></i>
+                        </div>
+                        <h3 class="font-bold text-green-600">Ida</h3>
+                        <p class="text-sm text-gray-600 mt-1">Validation</p>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-20 h-20 rounded-full bg-purple-100 flex items-center justify-center mb-4 z-10">
+                            <i class="fas fa-trademark text-2xl text-purple-600"></i>
+                        </div>
+                        <h3 class="font-bold text-purple-600">Branding</h3>
+                        <p class="text-sm text-gray-600 mt-1">Registration</p>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-20 h-20 rounded-full bg-yellow-100 flex items-center justify-center mb-4 z-10">
+                            <i class="fas fa-hand-holding-usd text-2xl text-yellow-600"></i>
+                        </div>
+                        <h3 class="font-bold text-yellow-600">Funding</h3>
+                        <p class="text-sm text-gray-600 mt-1">Schemes</p>
+                    </div>
+                    
+                    <!-- Step 5 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center mb-4 z-10">
+                            <i class="fas fa-rocket text-2xl text-red-600"></i>
+                        </div>
+                        <h3 class="font-bold text-red-600">Launch</h3>
+                        <p class="text-sm text-gray-600 mt-1">Product</p>
+                    </div>
+                    
+                    <!-- Step 6 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-20 h-20 rounded-full bg-teal-100 flex items-center justify-center mb-4 z-10">
+                            <i class="fas fa-chart-line text-2xl text-teal-600"></i>
+                        </div>
+                        <h3 class="font-bold text-teal-600">Scaling</h3>
+                        <p class="text-sm text-gray-600 mt-1">Growth</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-blue-50 rounded-2xl p-6">
+                <h3 class="text-xl font-bold text-blue-800 mb-4">Success Metrics</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="text-center">
+                        <div class="stat-number">95%</div>
+                        <p class="text-sm font-semibold text-gray-700">Completion Rate</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-number">6-8</div>
+                        <p class="text-sm font-semibold text-gray-700">Weeks to MVP</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-number">80%</div>
+                        <p class="text-sm font-semibold text-gray-700">Funding Success</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="stat-number">1:10</div>
+                        <p class="text-sm font-semibold text-gray-700">Mentor Ratio</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Market Opportunity -->
+        <section id="market" class="bg-white rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Market Opportunity</h2>
+            <div class="text-center text-gray-700 max-w-4xl mx-auto mb-8">
+                <p class="text-lg">The global market for startup software and services is poised for explosive growth, with a growing demand for unified, data-driven platforms.</p>
+            </div>
+            <div class="flex flex-col md:flex-row justify-center items-center space-y-6 md:space-y-0 md:space-x-6">
+                <div class="bg-blue-100 rounded-2xl w-48 h-48 flex flex-col items-center justify-center text-blue-800 font-bold text-center p-4 shadow-md">
+                    <p class="text-sm mb-2">Total Addressable Market</p>
+                    <p class="text-3xl">$25B+</p>
+                </div>
+                <i class="fas fa-arrow-right text-3xl text-gray-400 hidden md:block"></i>
+                <div class="bg-green-100 rounded-2xl w-48 h-48 flex flex-col items-center justify-center text-green-800 font-bold text-center p-4 shadow-md">
+                    <p class="text-sm mb-2">Serviceable Available Market</p>
+                    <p class="text-3xl">$5B+</p>
+                </div>
+                <i class="fas fa-arrow-right text-3xl text-gray-400 hidden md:block"></i>
+                <div class="bg-purple-100 rounded-2xl w-48 h-48 flex flex-col items-center justify-center text-purple-800 font-bold text-center p-4 shadow-md">
+                    <p class="text-sm mb-2">Serviceable Obtainable Market</p>
+                    <p class="text-3xl">$350M</p>
+                </div>
+            </div>
+            <div class="mt-12 bg-white p-6 rounded-xl shadow-md">
+                <h3 class="text-xl font-bold mb-4 text-center">Market Growth Projection</h3>
+                <div class="w-full h-64">
+                    <canvas id="marketChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Model -->
+        <section id="business-model" class="bg-white rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Business Model</h2>
+            <div class="text-center text-gray-700 max-w-4xl mx-auto mb-8">
+                <p class="text-lg">Our diversified revenue streams ensure profitability and scalability.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="flex flex-col items-center text-center p-6 bg-blue-50 rounded-xl shadow-md border border-blue-100">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-crown text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Founders' Subscription</h3>
+                    <p class="text-gray-700">Freemium model with a paid Pro OS subscription at <strong>$29/month</strong>.</p>
+                </div>
+                <div class="flex flex-col items-center text-center p-6 bg-green-50 rounded-xl shadow-md border border-green-100">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-chart-pie text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Investors' SaaS</h3>
+                    <p class="text-gray-700">Tiered SaaS subscription for investors and VCs based on features and usage.</p>
+                </div>
+                <div class="flex flex-col items-center text-center p-6 bg-purple-50 rounded-xl shadow-md border border-purple-100">
+                    <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-store text-2xl text-purple-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Marketplace Fees</h3>
+                    <p class="text-gray-700">Small percentage fee on all transactions within our B2B service marketplace.</p>
+                </div>
+            </div>
+            <div class="mt-12 bg-white p-6 rounded-xl shadow-md">
+                <h3 class="text-xl font-bold mb-4 text-center">Revenue Projection by Stream</h3>
+                <div class="w-full h-64">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Funding Ask -->
+        <section id="funding-ask" class="bg-white rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">The Ask & Use of Funds</h2>
+            <div class="text-center text-gray-700 max-w-4xl mx-auto mb-8">
+                <p class="text-lg">We are seeking <strong>15,00,000Rs(15lacs+)</strong> in pre-seed funding to build and launch our platform and capture initial market share.</p>
+            </div>
+            <div class="flex flex-col lg:flex-row items-center justify-center gap-8">
+                <div class="w-full lg:w-1/2 flex justify-center">
+                    <div style="width: 300px; height: 300px;">
+                        <canvas id="fundingChart"></canvas>
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/2">
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium">Product Development</span>
+                                <span class="font-medium">40%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-blue-600 h-2.5 rounded-full" style="width: 40%"></div>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-1">Building the core platform and AI tools</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium">GTM & Partnerships</span>
+                                <span class="font-medium">30%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-amber-500 h-2.5 rounded-full" style="width: 30%"></div>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-1">Marketing, sales, and ecosystem integrations</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium">Talent Acquisition</span>
+                                <span class="font-medium">20%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 20%"></div>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-1">Hiring key engineering and business roles</p>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="font-medium">Operational Reserve</span>
+                                <span class="font-medium">10%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 rounded-full h-2.5">
+                                <div class="bg-gray-400 h-2.5 rounded-full" style="width: 10%"></div>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-1">Covering initial operational costs and runway</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Financial Projections -->
+        <section id="projections" class="bg-white rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Financial Projections</h2>
+            <div class="text-center text-gray-700 max-w-4xl mx-auto mb-8">
+                <p class="text-lg">A 3-year revenue forecast demonstrating a clear path to profitability and scalability.</p>
+            </div>
+            <div class="bg-white p-6 rounded-xl shadow-md mb-8">
+                <div class="w-full h-64">
+                    <canvas id="projectionChart"></canvas>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="p-4 border-b">Metric</th>
+                            <th class="p-4 border-b">Year 1</th>
+                            <th class="p-4 border-b">Year 2</th>
+                            <th class="p-4 border-b">Year 3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4 font-semibold">Revenue (USD)</td>
+                            <td class="p-4">$150K</td>
+                            <td class="p-4">$1.5M</td>
+                            <td class="p-4">$5M</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4 font-semibold">Founders (Paid)</td>
+                            <td class="p-4">~200</td>
+                            <td class="p-4">~2,000</td>
+                            <td class="p-4">~8,000</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4 font-semibold">Investors (Paid)</td>
+                            <td class="p-4">~20</td>
+                            <td class="p-4">~200</td>
+                            <td class="p-4">~800</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4 font-semibold">Burn Rate (Avg. / Mo.)</td>
+                            <td class="p-4">~$25K</td>
+                            <td class="p-4">~$50K</td>
+                            <td class="p-4">~$80K</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Roles Section -->
+        <section id="roles" class="bg-white rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Key Roles Driving AP's Startup Ecosystem</h2>
+            <p class="text-center text-gray-600 max-w-3xl mx-auto mb-10">
+                Our platform brings together 138+ specialized roles to create a comprehensive support system for startups at every stage of their journey
+            </p>
+            
+            <div class="grid md:grid-cols-4 gap-6">
+                <!-- 20 Roles -->
+                <div class="role-card bg-blue-50 rounded-2xl p-6 text-center">
+                    <i class="fas fa-user-tie text-3xl text-blue-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800">Founder & CEO</h3>
+                    <p class="text-gray-700 text-sm">Visionary leader driving overall strategy and growth.</p>
+                </div>
+                <div class="role-card bg-green-50 rounded-2xl p-6 text-center">
+                    <i class="fas fa-code text-3xl text-green-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800">Tech Lead</h3>
+                    <p class="text-gray-700 text-sm">Oversees platform development and technology solutions.</p>
+                </div>
+                <div class="role-card bg-yellow-50 rounded-2xl p-6 text-center">
+                    <i class="fas fa-chart-line text-3xl text-yellow-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800">Business Analyst</h3>
+                    <p class="text-gray-700 text-sm">Analyzes market trends and startup growth metrics.</p>
+                </div>
+                <div class="role-card bg-purple-50 rounded-2xl p-6 text-center">
+                    <i class="fas fa-hand-holding-heart text-3xl text-purple-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800">Community Manager</h3>
+                    <p class="text-gray-700 text-sm">Engages startups, mentors, and rural entrepreneurs.</p>
+                </div>
+                <div class="role-card bg-orange-50 rounded-2xl p-6 text-center">
+                    <i class="fas fa-lightbulb text-3xl text-orange-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800">Innovation Strategist</h3>
+                    <p class="text-gray-700 text-sm">Identifies emerging opportunities and disruptive ideas.</p>
+                </div>
+                <div class="role-card bg-teal-50 rounded-2xl p-6 text-center">
+                    <i class="fas fa-university text-3xl text-teal-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800">Government Liaison</h3>
+                    <p class="text-gray-700 text-sm">Coordinates programs and funding schemes with AP government.</p>
+                </div>
+                <div class="role-card bg-pink-50 rounded-2xl p-6 text-center">
+                    <i class="fas fa-users text-3xl text-pink-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800">Investor Relations</h3>
+                    <p class="text-gray-700 text-sm">Builds partnerships with investors and funding networks.</p>
+                </div>
+                <div class="role-card bg-indigo-50 rounded-2xl p-6 text-center">
+                    <i class="fas fa-graduation-cap text-3xl text-indigo-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800">Mentorship Coordinator</h3>
+                    <p class="text-gray-700 text-sm">Onboards mentors to support startups across districts.</p>
+                </div>
+                
+                <!-- Additional roles with show more functionality -->
+                <div class="role-card hidden more-roles bg-lime-50 rounded-2xl p-6 text-center">
+                    <i class="fas fa-truck text-3xl text-lime-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800">Supply Chain Specialist</h3>
+                    <p class="text-gray-700 text-sm">Supports startups in scaling production & logistics.</p>
+                </div>
+                <div class="role-card hidden more-roles bg-cyan-50 rounded-2xl p-6 text-center">
+                    <i class="fas fa-paint-brush text-3xl text-cyan-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800">Design Lead</h3>
+                    <p class="text-gray-700 text-sm">Ensures UI/UX and branding excellence across platforms.</p>
+                </div>
+                <div class="role-card hidden more-roles bg-red-50 rounded-2xl p-6 text-center">
+                    <i class="fas fa-bullhorn text-3xl text-red-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800">Marketing Lead</h3>
+                    <p class="text-gray-700 text-sm">Promotes platform adoption and outreach campaigns.</p>
+                </div>
+                <div class="role-card hidden more-roles bg-green-50 rounded-2xl p-6 text-center">
+                    <i class="fas fa-handshake text-3xl text-green-600 mb-3"></i>
+                    <h3 class="font-bold text-gray-800">Partnership Manager</h3>
+                    <p class="text-gray-700 text-sm">Develops collaborations with corporates and NGOs.</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button id="show-more-roles" class="px-6 py-3 bg-blue-100 text-blue-700 rounded-full font-semibold hover:bg-blue-200 transition-colors">
+                    <i class="fas fa-chevron-down mr-2"></i>View More Roles
+                </button>
+            </div>
+        </section>
+
+        <!-- Impact Assessment -->
+        <section id="impact" class="bg-white rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">Projected Impact & Outcomes</h2>
+            
+            <div class="grid md:grid-cols-3 gap-6 mb-10">
+                <div class="bg-gradient-to-br from-blue-500 to-blue-700 rounded-2xl p-6 text-white text-center card-hover">
+                    <i class="fas fa-briefcase text-4xl mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Economic Impact</h3>
+                    <p class="text-blue-100">₹2,100+ Cr economic value generated through new businesses and job creation</p>
+                </div>
+                <div class="bg-gradient-to-br from-green-500 to-green-700 rounded-2xl p-6 text-white text-center card-hover">
+                    <i class="fas fa-users text-4xl mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Social Impact</h3>
+                    <p class="text-green-100">35% women-led startups, 20% from rural areas, inclusive growth across districts</p>
+                </div>
+                <div class="bg-gradient-to-br from-purple-500 to-purple-700 rounded-2xl p-6 text-white text-center card-hover">
+                    <i class="fas fa-chart-line text-4xl mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Innovation Impact</h3>
+                    <p class="text-purple-100">500+ patent applications, 100+ scalable solutions for local challenges</p>
+                </div>
+            </div>
+            
+            <h3 class="text-2xl font-bold text-blue-700 mb-6">Implementation Timeline</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4 class="text-xl font-bold text-gray-800">Phase 1: Foundation (Months 1-6)</h4>
+                    <p class="text-gray-700">Platform development, pilot launch in 3 districts, onboard first 100 mentors</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="text-xl font-bold text-gray-800">Phase 2: Expansion (Months 7-18)</h4>
+                    <p class="text-gray-700">State-wide rollout, 1,000+ startups onboarded, facilitate ₹50Cr+ funding</p>
+                </div>
+                <div class="timeline-item">
+                    <h4 class="text-xl font-bold text-gray-800">Phase 3: Scale (Months 19-36)</h4>
+                    <p class="text-gray-700">10,000+ startups enabled, ₹500Cr+ funding, national recognition as model ecosystem</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Partnership Ask -->
+        <section id="partnership" class="bg-white rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">How You Can Support This Initiative</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">Strategic Support Requested</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-handshake text-blue-500 mt-1 mr-3 text-xl"></i>
+                            <span class="text-gray-700"><strong>Strategic Partnership:</strong> Endorsement and guidance to align with AP's innovation goals</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-network-wired text-green-500 mt-1 mr-3 text-xl"></i>
+                            <span class="text-gray-700"><strong>Ecosystem Access:</strong> Introduction to key stakeholders and government departments</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-bullhorn text-purple-500 mt-1 mr-3 text-xl"></i>
+                            <span class="text-gray-700"><strong>Launch Advocacy:</strong> Champion the platform's launch and adoption across districts</span>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-bold text-blue-700 mb-4">Why Partner With Us?</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-bolt text-yellow-500 mt-1 mr-3 text-xl"></i>
+                            <span class="text-gray-700"><strong>Proven Team:</strong> Experienced entrepreneurs and technologists with track record</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-puzzle-piece text-red-500 mt-1 mr-3 text-xl"></i>
+                            <span class="text-gray-700"><strong>Ready Implementation:</strong> Platform development underway, pilot ready in 90 days</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-trophy text-green-500 mt-1 mr-3 text-xl"></i>
+                            <span class="text-gray-700"><strong>Scalable Model:</strong> Designed for rapid scaling across all 26 districts</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="mt-10 bg-blue-50 rounded-2xl p-6 text-center">
+                <h3 class="text-2xl font-bold text-blue-800 mb-4">Next Steps Requested</h3>
+                <p class="text-gray-700 mb-4">We request a 30-minute meeting to present our detailed plan and discuss how we can collaborate to make Andhra Pradesh India's premier startup destination.</p>
+                <div class="flex flex-wrap justify-center gap-4">
+                    <div class="bg-white rounded-xl p-3 shadow-sm">
+                        <i class="fas fa-calendar-check text-blue-600 text-2xl mb-2"></i>
+                        <p class="text-sm font-semibold">Presentation Meeting</p>
+                    </div>
+                    <div class="bg-white rounded-xl p-3 shadow-sm">
+                        <i class="fas fa-map-marked-alt text-green-600 text-2xl mb-2"></i>
+                        <p class="text-sm font-semibold">Pilot District Selection</p>
+                    </div>
+                    <div class="bg-white rounded-xl p-3 shadow-sm">
+                        <i class="fas fa-handshake text-purple-600 text-2xl mb-2"></i>
+                        <p class="text-sm font-semibold">Partnership Agreement</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="team" class="bg-white rounded-3xl shadow-xl p-8 mb-12 fade-in">
+            <div class="flex flex-col items-center text-center mb-10">
+                <div class="w-32 h-32 rounded-full bg-blue-100 mb-4 flex items-center justify-center shadow-lg">
+                    <i class="fas fa-user-tie text-4xl text-blue-600"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800">Kakarla Rajesh</h3>
+                <p class="text-blue-600 font-semibold">Founder & CEO</p>
+                <p class="text-gray-600 max-w-2xl mx-auto mt-3 leading-relaxed text-center">
+                    Passionate and ambitious fresher with a Mechanical Engineering background, currently exploring entrepreneurship.
+                    Dedicated to building innovative solutions, supporting startups, and creating opportunities for growth and job creation.
+                </p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="gradient-bg text-white rounded-3xl shadow-2xl p-8 text-center fade-in">
+            <h2 class="text-3xl font-bold mb-6">Let's Build Andhra's Future Together</h2>
+            <p class="text-xl text-blue-100 max-w-2xl mx-auto mb-8">
+                We're ready to deploy this platform and create tangible impact across all districts of Andhra Pradesh.
+            </p>
+            
+            <div class="bg-white bg-opacity-10 rounded-2xl p-6 inline-block">
+                <div class="flex flex-col md:flex-row items-center justify-center gap-8">
+                    <div class="text-center">
+                        <i class="fas fa-user-circle text-3xl mb-2"></i>
+                        <p class="font-semibold">Kakarla Rajesh</p>
+                        <p>Founder & CEO</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-envelope text-3xl mb-2"></i>
+                        <p class="font-semibold">kakarlarajesh09@gmail.com</p>
+                        <p>Email</p>
+                    </div>
+                    <div class="text-center">
+                        <i class="fas fa-phone-alt text-3xl mb-2"></i>
+                        <p class="font-semibold">8074048108</p>
+                        <p>Phone</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8">
+                <p class="text-blue-100 italic">"Together, we can make Andhra Pradesh the startup capital of India!"</p>
+            </div>
+        </section>
+
+        <footer class="text-center text-gray-600 text-sm mt-12">
+            <p>IVP STARTUP OS - Proposal for Andhra Pradesh Development</p>
+            <p class="mt-2">© 2023 IVP STARTUP OS. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Show more roles functionality
+        document.getElementById('show-more-roles').addEventListener('click', function() {
+            const moreRoles = document.querySelectorAll('.more-roles');
+            moreRoles.forEach(role => {
+                role.classList.toggle('hidden');
+            });
+            
+            if (this.textContent.includes('View More')) {
+                this.innerHTML = '<i class="fas fa-chevron-up mr-2"></i>View Less Roles';
+            } else {
+                this.innerHTML = '<i class="fas fa-chevron-down mr-2"></i>View More Roles';
+            }
+        });
+        
+        // Fade in elements on scroll
+        function checkFade() {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkFade);
+        window.addEventListener('load', checkFade);
+        
+        // Progress bar
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+        });
+        
+        // Navigation dots highlighting
+        const sections = document.querySelectorAll('section');
+        const navDots = document.querySelectorAll('.nav-dot');
+        
+        window.addEventListener('scroll', function() {
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navDots.forEach(dot => {
+                dot.classList.remove('opacity-100');
+                dot.classList.add('opacity-50');
+                if (dot.getAttribute('href').substring(1) === current) {
+                    dot.classList.remove('opacity-50');
+                    dot.classList.add('opacity-100');
+                }
+            });
+        });
+
+        // Initialize charts
+        document.addEventListener('DOMContentLoaded', function() {
+            // Market Growth Projection Chart
+            const marketCtx = document.getElementById('marketChart').getContext('2d');
+            const marketChart = new Chart(marketCtx, {
+                type: 'line',
+                data: {
+                    labels: ['2023', '2024', '2025', '2026', '2027'],
+                    datasets: [{
+                        label: 'Market Size (in $B)',
+                        data: [5, 8, 12, 18, 25],
+                        borderColor: '#1e3a8a',
+                        backgroundColor: 'rgba(30, 58, 138, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.3,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Projected Startup Software Market Growth',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Market Size ($ Billion)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Revenue Projection by Stream Chart
+            const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+            const revenueChart = new Chart(revenueCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Year 1', 'Year 2', 'Year 3'],
+                    datasets: [
+                        {
+                            label: 'Founder Subscriptions',
+                            data: [60, 600, 2400],
+                            backgroundColor: '#3b82f6',
+                        },
+                        {
+                            label: 'Investor SaaS',
+                            data: [40, 400, 1600],
+                            backgroundColor: '#10b981',
+                        },
+                        {
+                            label: 'Marketplace Fees',
+                            data: [50, 500, 1000],
+                            backgroundColor: '#8b5cf6',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Revenue Projection by Stream (in $K)',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                        },
+                        y: {
+                            stacked: true,
+                            title: {
+                                display: true,
+                                text: 'Revenue ($ Thousands)'
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Funding Allocation Chart
+            const fundingCtx = document.getElementById('fundingChart').getContext('2d');
+            const fundingChart = new Chart(fundingCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Product Development', 'GTM & Partnerships', 'Talent Acquisition', 'Operational Reserve'],
+                    datasets: [{
+                        data: [40, 30, 20, 10],
+                        backgroundColor: [
+                            '#3b82f6',
+                            '#f59e0b',
+                            '#10b981',
+                            '#9ca3af'
+                        ],
+                        borderWidth: 0,
+                        hoverOffset: 12
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 15,
+                                padding: 15
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.label + ': ' + context.raw + '%';
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+
+            // Financial Projections Chart
+            const projectionCtx = document.getElementById('projectionChart').getContext('2d');
+            const projectionChart = new Chart(projectionCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Year 1', 'Year 2', 'Year 3'],
+                    datasets: [{
+                        label: 'Revenue',
+                        data: [150, 1500, 5000],
+                        borderColor: '#1e3a8a',
+                        backgroundColor: 'rgba(30, 58, 138, 0.1)',
+                        borderWidth: 3,
+                        tension: 0.2,
+                        fill: true,
+                        yAxisID: 'y'
+                    }, {
+                        label: 'Users',
+                        data: [200, 2000, 8000],
+                        borderColor: '#0ea5e9',
+                        backgroundColor: 'transparent',
+                        borderWidth: 3,
+                        tension: 0.2,
+                        borderDash: [5, 5],
+                        fill: false,
+                        yAxisID: 'y1'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: '3-Year Financial Projections',
+                            font: {
+                                size: 16,
+                                weight: 'bold'
+                            }
+                        },
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            type: 'linear',
+                            display: true,
+                            position: 'left',
+                            title: {
+                                display: true,
+                                text: 'Revenue ($ Thousands)'
+                            }
+                        },
+                        y1: {
+                            type: 'linear',
+                            display: true,
+                            position: 'right',
+                            title: {
+                                display: true,
+                                text: 'Users'
+                            },
+                            grid: {
+                                drawOnChartArea: false,
+                            },
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
